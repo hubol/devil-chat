@@ -1,0 +1,27 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "A base project for browser games",
+  "scripts": {
+    "serve": "parcel src/index.html --open",
+    "build": "npm run gen:sounds -- --build && npm run gen:music -- --build && parcel build --public-url ./ src/index.html",
+    "watch-gen:assets": "concurrently \"npm run gen:textures\" \"npm run gen:sounds\" \"npm run gen:music\"",
+    "gen:textures": "generate-textures assets/images src/typedAssets/textures.ts",
+    "gen:sounds": "generate-howls assets/sounds .converted/sounds src/typedAssets/sounds.ts",
+    "gen:music": "generate-howls assets/music .converted/music src/typedAssets/musics.ts --dontPreload"
+  },
+  "author": "Hubol Persson-Gordon",
+  "devDependencies": {
+    "@types/howler": "^2.2.1",
+    "concurrently": "^5.3.0",
+    "generate-howls": "^0.2.5",
+    "generate-textures": "^0.1.2",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "howler": "^2.2.1",
+    "pissant": "^0.1.2",
+    "pixi.js": "^5.3.3"
+  }
+}
