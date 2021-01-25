@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsc-watch --onSuccess \"node ./dist/server.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/ws": "^7.4.0",
+    "tsc-watch": "^4.2.9",
     "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "ws": "^7.4.2"
   }
 }
