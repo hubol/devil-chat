@@ -54,3 +54,8 @@ const iguana = new Sprite(Iguana)
     });
 
 game.stage.addChild(lines, circle, iguana, new BitmapText("Welcome, special agent Sylvie.", { fontName: AcrobatixFont.font }));
+
+const webSocket = new WebSocket('ws://localhost:6969');
+webSocket.onmessage = ev => {
+    console.log(ev);
+};
