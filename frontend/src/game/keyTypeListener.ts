@@ -44,6 +44,7 @@ export class KeyTypeListener extends Container
             case "CapsLock":
             case "Meta":
             case "ContextMenu":
+            case "Control":
                 return;
             default:
                 this._typedString += event.key;
