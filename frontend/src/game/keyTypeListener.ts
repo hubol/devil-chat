@@ -7,19 +7,32 @@ export class KeyTypeListener extends Container
 
         document.addEventListener("keydown", this.handleKeyTyped);
         this.on("removed", () => document.removeEventListener("keydown", this.handleKeyTyped));
+
+        this.withStep(() => {
+            if (this._cursorTimer++ > 15)
+            {
+                this._showCursor = !this._showCursor;
+                this._cursorTimer = 0;
+            }
+        })
     }
 
+    private _showCursor = false;
+    private _cursorTimer = 0;
     private _typedString = "";
 
     handleKeyTyped = (event: KeyboardEvent) =>
     {
+        this._showCursor = true;
+        this._cursorTimer = 0;
+
         switch (event.code.toLowerCase())
         {
             case "enter":
                 this._typedString += '\n';
                 return;
             case "backspace":
-                this._typedString = this._typedString.substring(0, this._typedString.length - 1);
+                this._typedString = this._typedString.slice(0, -1);
                 return;
             case "tab":
                 this._typedString += '  ';
@@ -54,5 +67,13 @@ export class KeyTypeListener extends Container
     get string()
     {
         return this._typedString;
+    }
+
+    get stringWithCursor()
+    {
+        const cursor = String.fromCharCode(127);
+        if (this._showCursor)
+            return `${this.string}${cursor}`;
+        return this.string;
     }
 }

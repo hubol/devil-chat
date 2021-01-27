@@ -53,15 +53,15 @@ const iguana = new Sprite(Iguana)
             iguana.scale.x *= 1.1;
     });
 
-const typeListener = iguana.addChild(new KeyTypeListener());
+const typeListener = new KeyTypeListener();
 
 const bitmapText = new BitmapText("Welcome, special agent Sylvie.", { fontName: AcrobatixFont.font })
     .withStep(() => {
         if (typeListener.string.length > 0)
-            bitmapText.text = typeListener.string;
+            bitmapText.text = typeListener.stringWithCursor;
     });
 
-startGame.stage.addChild(lines, circle, iguana, bitmapText);
+startGame.stage.addChild(lines, circle, iguana, bitmapText, typeListener);
 
 const webSocket = new WebSocket('ws://localhost:6969');
 webSocket.onmessage = ev => {
