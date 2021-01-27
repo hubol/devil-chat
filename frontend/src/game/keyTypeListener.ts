@@ -58,6 +58,10 @@ export class KeyTypeListener extends Container
             case "Meta":
             case "ContextMenu":
             case "Control":
+            case "ArrowUp":
+            case "ArrowLeft":
+            case "ArrowDown":
+            case "ArrowRight":
                 return;
             default:
                 this._typedString += event.key;
