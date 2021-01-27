@@ -6,6 +6,7 @@ import {AcrobatixFont} from "../typedAssets/fonts";
 import {Iguana} from "../typedAssets/textures";
 import {CratePickup} from "../typedAssets/sounds";
 import {integralUpscaleCanvas} from "../utils/browser/integralUpscaleCanvas";
+import {KeyTypeListener} from "./keyTypeListener";
 
 const startGame = createGame({width: 640, height: 480, targetFps: 60});
 startGame.canvasElement.id = "gameCanvas";
@@ -52,7 +53,15 @@ const iguana = new Sprite(Iguana)
             iguana.scale.x *= 1.1;
     });
 
-startGame.stage.addChild(lines, circle, iguana, new BitmapText("Welcome, special agent Sylvie.", { fontName: AcrobatixFont.font }));
+const typeListener = iguana.addChild(new KeyTypeListener());
+
+const bitmapText = new BitmapText("Welcome, special agent Sylvie.", { fontName: AcrobatixFont.font })
+    .withStep(() => {
+        if (typeListener.string.length > 0)
+            bitmapText.text = typeListener.string;
+    });
+
+startGame.stage.addChild(lines, circle, iguana, bitmapText);
 
 const webSocket = new WebSocket('ws://localhost:6969');
 webSocket.onmessage = ev => {
