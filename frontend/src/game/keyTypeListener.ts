@@ -1,12 +1,15 @@
 import {Container} from "pixi.js";
 
+type KeyTypeListenerNewlines = "none";
+
 export class KeyTypeListener extends Container
 {
-    constructor() {
+    constructor(args : { newlines: KeyTypeListenerNewlines }) {
         super();
 
         document.addEventListener("keydown", this.handleKeyTyped);
         this.on("removed", () => document.removeEventListener("keydown", this.handleKeyTyped));
+        this.newlines = args.newlines;
 
         this.withStep(() => {
             if (this._cursorTimer++ > 15)
@@ -16,6 +19,8 @@ export class KeyTypeListener extends Container
             }
         })
     }
+
+    private readonly newlines: KeyTypeListenerNewlines;
 
     private _showCursor = false;
     private _cursorTimer = 0;
@@ -29,7 +34,8 @@ export class KeyTypeListener extends Container
         switch (event.code.toLowerCase())
         {
             case "enter":
-                this._typedString += '\n';
+                if (this.newlines !== "none")
+                    this._typedString += '\n';
                 return;
             case "backspace":
                 this._typedString = this._typedString.slice(0, -1);

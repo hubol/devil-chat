@@ -53,7 +53,7 @@ const iguana = new Sprite(Iguana)
             iguana.scale.x *= 1.1;
     });
 
-const typeListener = new KeyTypeListener();
+const typeListener = new KeyTypeListener({ newlines: "none" });
 
 const bitmapText = new BitmapText("Welcome, special agent Sylvie.", { fontName: AcrobatixFont.font })
     .withStep(() => {
