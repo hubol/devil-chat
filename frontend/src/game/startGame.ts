@@ -7,6 +7,7 @@ import {Iguana} from "../typedAssets/textures";
 import {CratePickup} from "../typedAssets/sounds";
 import {integralUpscaleCanvas} from "../utils/browser/integralUpscaleCanvas";
 import {KeyTypeListener} from "./keyTypeListener";
+import {client} from "./devilClient";
 
 const startGame = createGame({width: 640, height: 480, targetFps: 60});
 startGame.canvasElement.id = "gameCanvas";
@@ -63,7 +64,4 @@ const bitmapText = new BitmapText("Welcome, special agent Sylvie.", { fontName: 
 
 startGame.stage.addChild(lines, circle, iguana, bitmapText, typeListener);
 
-const webSocket = new WebSocket('ws://localhost:6969');
-webSocket.onmessage = ev => {
-    console.log(ev);
-};
+client.login();

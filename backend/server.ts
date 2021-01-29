@@ -1,14 +1,23 @@
-import {Server} from "ws";
+import WebSocket, {Server} from "ws";
 
 const port = Number(process.env.port || 6969);
-
 const wss = new Server({ port });
-wss.on("connection", socket => {
-    socket.send(JSON.stringify({ name: "hubol" }));
-    console.log(socket, "connected");
-    socket.on("close", () => {
-        console.log(socket, "closed");
-    });
+
+let id = 0;
+
+wss.on("connection", (socket, req) => {
+    console.log(req.socket.remoteAddress, "connected");
+    sendMessage(socket, "login", { id: id++ });
 });
 
 console.log(`...Started on port ${port}`);
+
+function sendMessage(socket: WebSocket, type: string, data: { })
+{
+    sendJson(socket, { type, ...data });
+}
+
+function sendJson(socket: WebSocket, data: any)
+{
+    socket.send(JSON.stringify(data));
+}
