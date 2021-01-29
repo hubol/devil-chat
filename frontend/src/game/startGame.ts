@@ -8,6 +8,7 @@ import {CratePickup} from "../typedAssets/sounds";
 import {integralUpscaleCanvas} from "../utils/browser/integralUpscaleCanvas";
 import {KeyTypeListener} from "./keyTypeListener";
 import {client} from "./devilClient";
+import {devil} from "./devil";
 
 const startGame = createGame({width: 640, height: 480, targetFps: 60});
 startGame.canvasElement.id = "gameCanvas";
@@ -15,14 +16,8 @@ document.body.appendChild(startGame.canvasElement);
 integralUpscaleCanvas(startGame.canvasElement, 20);
 
 const lines = new Graphics()
-    .withStep(() => {
-        lines.lineStyle(1, 0x808080);
-        if (Math.random() > 0.9)
-            lines.clear();
-        const x = startGame.width * (Math.sin(now.ms * 0.125) + 1) / 2;
-        const y = startGame.height * (Math.cos(now.ms * 0.5) + 1) / 2;
-        lines.lineTo(x, y);
-    });
+    .beginFill(0x0000ff)
+    .drawRect(0, 0, 640, 480);
 
 const circle = new Graphics()
     .withStep(() => {
@@ -62,6 +57,6 @@ const bitmapText = new BitmapText("Welcome, special agent Sylvie.", { fontName: 
             bitmapText.text = typeListener.stringWithCursor;
     });
 
-startGame.stage.addChild(lines, circle, iguana, bitmapText, typeListener);
+startGame.stage.addChild(lines, circle, iguana, bitmapText, typeListener, devil().at(100, 100));
 
 client.login();
