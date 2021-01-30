@@ -10,7 +10,7 @@ import {KeyTypeListener} from "./keyTypeListener";
 import {client} from "./devilClient";
 import {devil} from "./devil";
 
-const startGame = createGame({width: 640, height: 480, targetFps: 60});
+const startGame = createGame({width: 320, height: 240, targetFps: 60});
 startGame.canvasElement.id = "gameCanvas";
 document.body.appendChild(startGame.canvasElement);
 integralUpscaleCanvas(startGame.canvasElement, 20);
