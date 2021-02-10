@@ -45,33 +45,8 @@ export class KeyTypeListener extends Container
                 return;
         }
 
-        switch (event.key)
-        {
-            case "Dead":
-            case "Alt":
-            case "NumLock":
-            case "Shift":
-            case "ScrollLock":
-            case "Pause":
-            case "Insert":
-            case "Delete":
-            case "Home":
-            case "End":
-            case "PageUp":
-            case "PageDown":
-            case "Escape":
-            case "CapsLock":
-            case "Meta":
-            case "ContextMenu":
-            case "Control":
-            case "ArrowUp":
-            case "ArrowLeft":
-            case "ArrowDown":
-            case "ArrowRight":
-                return;
-            default:
-                this._typedString += event.key;
-        }
+        if (event.key.length === 1)
+            this._typedString += event.key;
     }
 
     get string()
