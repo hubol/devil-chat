@@ -10,7 +10,7 @@ html {
 }
 
 #gameCanvas {
-    box-shadow: 3vmin 3vmin #006060;
+    box-shadow: 0 0 8vmin #B795E5;
 }
 
 #startButton {
@@ -26,7 +26,7 @@ html {
     border: 0.1875em outset #E0E0E0;
     outline: 0;
 
-    box-shadow: 3vmin 3vmin #006060;
+    box-shadow: 3vmin 3vmin 3vmin #006060;
 }
 
 #startButton:hover {
@@ -42,7 +42,7 @@ html {
 }
 
 body {
-    background-color: #008080;
+    background-image: linear-gradient(#F3B2FF, #60DDC7);
     display: flex;
     justify-content: center;
     align-items: center;
