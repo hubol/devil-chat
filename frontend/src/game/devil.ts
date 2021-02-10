@@ -1,12 +1,16 @@
 import {Dumbass, Shadow} from "../typedAssets/textures";
 import {subimageTextures} from "../utils/pixi/subimageTextures";
 import {Container, Sprite} from "pixi.js";
-import { BevelFilter, DropShadowFilter } from "pixi-filters";
+import { DropShadowFilter } from "pixi-filters";
 import {SoftBevelFilter} from "../filters/softBevel/SoftBevelFilter";
 import {now} from "../utils/now";
+import Color from "color";
 
-export function devil()
+const colors = ["#ff0000", "#FF8223", "#FFCD44", "#B3D949", "#47C27C", "#5CDBC8", "#30BBDB", "#327BDB", "#8887E5", "#8887E5", "#B270E5", "#F4A6D7", "#F274CE"];
+
+export function devil(seed = Math.floor(Math.random() * 512))
 {
+    const seedUnit = (seed % 512) / 512;
     const textures = subimageTextures(Dumbass, 2);
     const container = new Container();
 
@@ -20,13 +24,20 @@ export function devil()
         return sprite;
     });
 
-    body.tint = 0xff0000;
-    container.filters = [ new SoftBevelFilter({ thickness: 2, lightColor: 0xFFA5AC, shadowColor: 0x99001A }) ];
-    eyes.filters = [ new DropShadowFilter({ color: 0x99001A, quality: 2, rotation: 150, distance: 3, alpha: 0.3 }) ];
+    const color = Color(colors[Math.floor(seedUnit * colors.length)]);
+    body.tint = color.rgbNumber();
+    const softBevelFilter = new SoftBevelFilter({
+        thickness: 2,
+        lightColor: color.lighten(0.75).saturate(0.33).rgbNumber(),
+        shadowColor: color.saturate(0.75).darken(0.375).rgbNumber()
+    });
+    console.log(softBevelFilter.lightColor);
+    container.filters = [softBevelFilter as any];
+    eyes.filters = [ new DropShadowFilter({ color: softBevelFilter.shadowColor, quality: 2, rotation: 150, distance: 3, alpha: 0.3 }) ];
     container.addChild(shadow, body, eyes);
 
     container.withStep(() => {
-        const f = now.s * 3;
+        const f = now.s * 3 + seed;
         body.scale.set(1 + Math.sin(f) * 0.05, 1 + Math.cos(-f * 0.9) * 0.05);
         eyes.position.set(0, Math.cos(-f * 1.02) * 2)
     });
